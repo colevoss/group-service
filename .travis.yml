@@ -28,7 +28,7 @@ jobs:
       script:
         - npm install -g serverless
         - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH" 
-        - sls deploy -s "${$BRANCH}"
+        - sls deploy -s ${$BRANCH}
 
     # - stage: stage
     #   script:
