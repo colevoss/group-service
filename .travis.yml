@@ -2,11 +2,11 @@ language: node_js
 node_js:
   - "6"
 
-stages:
-  - name: prod 
-    if: branch = master
-  - name: stage
-    if: branch != master
+# stages:
+#   - name: prod 
+#     if: branch = master
+#   - name: stage
+#     if: branch != master
 
 jobs:
   include:
@@ -14,11 +14,13 @@ jobs:
       script:
         - npm install -g serverless
         - sls deploy -s prod
+      if: branch = master
 
     - stage: stage
       script:
         - npm install -g serverless
         - sls deploy -s stage
+      if: branch != master
 
 # script:
 #   - npm install -g serverless
