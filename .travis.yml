@@ -1,6 +1,20 @@
 language: node_js
 node_js:
   - "6"
-script:
-  - npm install -g serverless
-  - sls deploy -s prod
+
+jobs:
+  include:
+    - stage: install serverless
+      script: npm install -g serverless
+
+    - stage: deploy to prod
+      script: sls deploy -s prod
+      if: branch = master
+
+    - stage: deploy to stage
+      script: sls deploy -s stage
+      if: branch != master
+
+# script:
+#   - npm install -g serverless
+#   - sls deploy -s prod
