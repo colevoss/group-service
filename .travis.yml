@@ -2,10 +2,13 @@ language: node_js
 node_js:
   - "6"
 
+script:
+  - npm install -g serverless
+
 jobs:
   include:
-    - stage: install serverless
-      script: npm install -g serverless
+    # - stage: install serverless
+    #   script: npm install -g serverless
 
     - stage: deploy to prod
       script: sls deploy -s prod
