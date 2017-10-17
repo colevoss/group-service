@@ -8,6 +8,10 @@ node_js:
 #   - name: stage
 #     if: branch != master
 
+cache:
+  directories:
+    - node_modules
+
 jobs:
   include:
     - stage: prod 
@@ -16,17 +20,22 @@ jobs:
         - sls deploy -s prod
       if: branch = master AND type != pull_request
 
-    - stage: stage
+    - stage: feature
       script:
         - npm install -g serverless
-        - sls deploy -s stage
-      if: type = pull_request
+        - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+        - sls deploy -s ${BRANCH}
+    # - stage: stage
+    #   script:
+    #     - npm install -g serverless
+    #     - sls deploy -s stage
+    #   if: type = pull_request
 
-    - stage: dev
-      script:
-        - npm install -g serverless
-        - sls deploy -s dev
-      if: branch != master AND type != pull_request
+    # - stage: dev
+    #   script:
+    #     - npm install -g serverless
+    #     - sls deploy -s dev
+    #   if: branch != master AND type != pull_request
 
 # script:
 #   - npm install -g serverless
