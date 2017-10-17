@@ -4,19 +4,24 @@ node_js:
 
 script:
   - npm install -g serverless
+  if: branch = master
+    - sls deploy -s prod
+  if: branch != master
+    - sls deploy -s stage
 
-jobs:
-  include:
+
+# jobs:
+#   include:
     # - stage: install serverless
     #   script: npm install -g serverless
 
-    - stage: deploy to prod
-      script: sls deploy -s prod
-      if: branch = master
+    # - stage: deploy to prod
+    #   script: sls deploy -s prod
+    #   if: branch = master
 
-    - stage: deploy to stage
-      script: sls deploy -s stage
-      if: branch != master
+    # - stage: deploy to stage
+    #   script: sls deploy -s stage
+    #   if: branch != master
 
 # script:
 #   - npm install -g serverless
