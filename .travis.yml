@@ -5,7 +5,7 @@ node_js:
 stages:
   - name: prod 
     if: branch = master
-  -name: stage
+  - name: stage
     if: branch != master
 
 jobs:
