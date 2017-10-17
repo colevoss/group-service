@@ -24,23 +24,17 @@ jobs:
         - sls deploy -s prod
       if: branch = master AND type != pull_request
 
-    - stage: feature
-      script:
-        - npm install -g serverless
-        - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH" 
-        - sls deploy -s env(BRANCH)
-
     # - stage: stage
     #   script:
     #     - npm install -g serverless
     #     - sls deploy -s stage
     #   if: type = pull_request
 
-    # - stage: dev
-    #   script:
-    #     - npm install -g serverless
-    #     - sls deploy -s dev
-    #   if: branch != master AND type != pull_request
+    - stage: dev
+      script:
+        - npm install -g serverless
+        - sls deploy -s dev
+      if: branch != master AND type != pull_request
 
 # script:
 #   - npm install -g serverless
