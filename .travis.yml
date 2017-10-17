@@ -14,13 +14,19 @@ jobs:
       script:
         - npm install -g serverless
         - sls deploy -s prod
-      if: branch = master
+      if: branch = master OR type != pull_request
 
     - stage: stage
       script:
         - npm install -g serverless
         - sls deploy -s stage
-      if: branch != master
+      if: type = pull_request
+
+    - stage: dev
+      script:
+        - npm install -g serverless
+        - sls deploy -s dev
+      if: branch != master AND type != pull_request
 
 # script:
 #   - npm install -g serverless
