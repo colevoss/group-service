@@ -5,7 +5,7 @@ const findGroup = (db, groupId) => {
     .collection('groups')
     .findOne({ _id: new ObjectId(groupId) })
     .then(group => {
-      console.log('Found group: ', group);
+      console.log('Found group!: ', group);
 
       return group;
     });
