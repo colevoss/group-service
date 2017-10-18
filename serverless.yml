@@ -1,0 +1,30 @@
+service: group-service
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  environment:
+    MONGO_URI: mongodb://adio:adio@cluster0-shard-00-00-ukyao.mongodb.net:27017,cluster0-shard-00-01-ukyao.mongodb.net:27017,cluster0-shard-00-02-ukyao.mongodb.net:27017/adio-groups?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin
+    # MONGO_URI: mongodb://localhost:27017/adio-groups
+
+functions:
+  createGroup:
+    handler: handlers/createGroup.create
+    events:
+      - http:
+          path: groups
+          method: post
+
+  getGroup:
+    handler: handlers/getGroup.get
+    events:
+      - http:
+          path: groups/{id}
+          method: get
+
+  getGroups:
+    handler: handlers/getGroups.getMany
+    events:
+      - http:
+          path: groups
+          method: get
