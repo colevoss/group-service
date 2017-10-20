@@ -44,14 +44,14 @@ functions:
     events:
       - http:
           method: put
-          path: groups/{id}/project
+          path: groups/{id}/projects
 
   removeProject:
     handler: handlers/removeProject.removeProjectHandler
     events:
       - http:
           method: delete
-          path: groups/{id}/project
+          path: groups/{id}/projects
   
 
 custom:
