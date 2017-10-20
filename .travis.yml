@@ -29,7 +29,8 @@ jobs:
 
     - stage: dev
       script:
-        - npm install -g serverless
+        - sleep 15
         - yarn test
+        - npm install -g serverless
         - sls deploy -s dev
       if: branch != master AND type != pull_request
