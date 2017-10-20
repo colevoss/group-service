@@ -1,8 +1,16 @@
 import { MongoClient, Db as IDb } from 'mongodb';
 
-const MONGO_DB_URI: string = process.env.MONGO_DB_URI || '';
-const MONGO_DB_NAME: string = process.env.MONGO_DB_NAME || '';
-const MONGO_DB_PARAMS: string = process.env.MONGO_DB_PARAMS || '';
+const env = process.env.NODE_ENV;
+
+let MONGO_DB_URI: string = process.env.MONGO_DB_URI || '';
+let MONGO_DB_NAME: string = process.env.MONGO_DB_NAME || '';
+let MONGO_DB_PARAMS: string = process.env.MONGO_DB_PARAMS || '';
+
+if (env === 'test') {
+  MONGO_DB_URI = 'mongodb://localhost:27017';
+  MONGO_DB_NAME = 'adio-groups-test';
+  MONGO_DB_PARAMS = '';
+}
 
 let dbCache: IDb;
 

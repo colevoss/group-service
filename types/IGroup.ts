@@ -10,5 +10,5 @@ export interface IGroup {
 export interface IGroupInput {
   name: string;
   userIds: Array<string>;
-  projectIds: Array<string>;
+  projectIds?: Array<string>;
 }
