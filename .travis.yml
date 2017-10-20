@@ -29,9 +29,9 @@ jobs:
 
     - stage: dev
       before_script:
+        - sleep 15
         - mongo adio-groups-test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
       script:
-        # - sleep 15
         - yarn test
         - npm install -g serverless
         - sls deploy -s dev
