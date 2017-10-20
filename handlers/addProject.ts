@@ -1,28 +1,18 @@
 import { APIGatewayEvent, Context, ProxyCallback } from 'aws-lambda';
 import { mongo } from '../utils/mongo';
 import { makeResponse } from '../utils/makeResponse';
-import { getGroup } from '../transactions/getGroup';
+import { addProject } from '../transactions/addProject';
 
-export const get = async (event: APIGatewayEvent, context: Context, cb: ProxyCallback): Promise<void> => {
+export const addProjectHandler = async (event: APIGatewayEvent, context: Context, cb: ProxyCallback): Promise<void> => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   const groupId = event.pathParameters.id;
+  const projectId: string = JSON.parse(event.body).projectId;
 
   try {
     const db = await mongo();
 
-    const group = await getGroup(db, groupId);
-
-    if (group == null) {
-      cb(
-        null,
-        makeResponse(400, {
-          error: `A group with the ID of ${groupId} could not be found`,
-        })
-      );
-
-      return;
-    }
+    const group = await addProject(db, groupId, projectId);
 
     cb(null, makeResponse(200, { group }));
   } catch (e) {

@@ -4,36 +4,57 @@ service:
 # Add the serverless-webpack plugin
 plugins:
   - serverless-webpack
+  - serverless-offline
 
 provider:
   name: aws
   runtime: nodejs6.10
   stage: ${opt:stage, 'dev'}
   environment:
+    MONGO_DB_URI: mongodb://adio:adio@cluster0-shard-00-00-ukyao.mongodb.net:27017,cluster0-shard-00-01-ukyao.mongodb.net:27017,cluster0-shard-00-02-ukyao.mongodb.net:27017
+    # MONGO_DB_URI: mongodb://localhost:27017
+    MONGO_DB_NAME: adio-groups-${self:provider.stage}
+    MONGO_DB_PARAMS: "ssl=true&replicaSet=Cluster0-shard-0&authSource=admin"
 
 functions:
-  hello:
-    handler: handler.hello
+  getGroup:
+    handler: handlers/get.get
     events:
       - http:
           method: get
-          path: hello
+          path: groups/{id}
 
-# resources:
-#   Resources:
-#     GroupsDynamoDbTable:
-#       Type: 'AWS::DynamoDB::Table'
-#       DeletionPolicy: Retain
-#       Properties:
-#         AttributeDefinitions:
-#           -
-#             AttributeName: id
-#             AttributeType: S
-#           KeySchema:
-#             -
-#               AttributeName: id
-#               KeyType: HASH
-#           ProvisionedThroughput:
-#             ReadCapacityUnits: 1
-#             WriteCapacityUnits: 1
-#           TableName: ${self:provider.environment.DYNAMO_TABLE}
+
+  getManyGroups:
+    handler: handlers/getMany.getMany
+    events:
+      - http:
+          method: get
+          path: groups
+
+  createGroup:
+    handler: handlers/create.create
+    events:
+      - http:
+          method: post
+          path: groups
+
+  addProject:
+    handler: handlers/addProject.addProjectHandler
+    events:
+      - http:
+          method: put
+          path: groups/{id}/project
+
+  removeProject:
+    handler: handlers/removeProject.removeProjectHandler
+    events:
+      - http:
+          method: delete
+          path: groups/{id}/project
+  
+
+custom:
+  webpackIncludeModules: true
+  serverless-offline:
+    port: 3001
