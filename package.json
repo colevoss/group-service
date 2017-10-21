@@ -1,10 +1,11 @@
 {
-  "name": "aws-nodejs-typescript",
+  "name": "adio-group-service",
   "version": "1.0.0",
-  "description": "Serverless webpack example using Typescript",
+  "description": "Group service for Adio project",
   "main": "handler.js",
   "scripts": {
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest",
+    "deploy": "serverless deploy"
   },
   "devDependencies": {
     "@types/jest": "^21.1.4",
@@ -16,7 +17,7 @@
     "webpack": "^3.6.0",
     "webpack-node-externals": "^1.6.0"
   },
-  "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
+  "author": "Cole Voss <voss.cole@gmail.com> (https://github.com/colevoss)",
   "license": "MIT",
   "dependencies": {
     "@types/aws-lambda": "^0.0.17",
@@ -27,10 +28,16 @@
     "mongodb": "^2.2.33"
   },
   "jest": {
-    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/jestPreprocessor.js"
     },
-    "testMatch": ["**/__tests__/*.(ts|tsx|js)"]
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx|js)"
+    ]
   }
 }
