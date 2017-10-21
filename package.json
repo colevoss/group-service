@@ -5,7 +5,7 @@
   "main": "handler.js",
   "scripts": {
     "test": "NODE_ENV=test jest",
-    "deploy": "serverless deploy"
+    "deploy:prod": "serverless deploy -s prod -v"
   },
   "devDependencies": {
     "@types/jest": "^21.1.4",
@@ -29,16 +29,10 @@
     "mongodb": "^2.2.33"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
+    "moduleFileExtensions": ["ts", "tsx", "js"],
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/jestPreprocessor.js"
     },
-    "testMatch": [
-      "**/__tests__/*.(ts|tsx|js)"
-    ]
+    "testMatch": ["**/__tests__/*.(ts|tsx|js)"]
   }
 }
