@@ -1,5 +1,6 @@
 module.exports.db = () => ({
-  MONGO_DB_URI: 'mongodb://localhost:27017',
-  MONGO_DB_NAME: 'adio-groups',
-  MONGO_DB_PARAMS: '',
+  uri:
+    'mongodb://adio:adio@cluster0-shard-00-00-ukyao.mongodb.net:27017,cluster0-shard-00-01-ukyao.mongodb.net:27017,cluster0-shard-00-02-ukyao.mongodb.net:27017',
+  name: 'adio-groups',
+  params: 'ssl=true&replicaSet=Cluster0-shard-0&authSource=admin',
 });
