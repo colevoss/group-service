@@ -36,5 +36,5 @@ jobs:
         name: Maybe Deploy
         command: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            sls deploy -s prod
+            sls deploy -s prod -v
           fi
