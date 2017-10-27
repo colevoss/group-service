@@ -3,12 +3,14 @@ import { IGroup } from '../types/IGroup';
 
 import { getGroup } from './getGroup';
 
-export const addProject = async (db: IDb, groupId: string | ObjectId, projectId: string): Promise<IGroup> => {
+export const addUsers = async (db: IDb, groupId: string, userIds: string[]): Promise<IGroup> => {
   const groupUpdate = await db.collection('groups').findOneAndUpdate(
     { _id: new ObjectId(groupId) },
     {
       $addToSet: {
-        projectIds: new ObjectId(projectId),
+        userIds: {
+          $each: userIds.map(id => new ObjectId(id)),
+        },
       },
     }
   );

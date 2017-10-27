@@ -11,13 +11,9 @@ provider:
   runtime: nodejs6.10
   stage: ${opt:stage, 'dev'}
   environment:
-    MONGO_DB_URI: ${env:MONGO_DB_URI, file(./config/${self:provider.stage}.js):db.uri}
-    # MONGO_DB_URI: mongodb://adio:adio@cluster0-shard-00-00-ukyao.mongodb.net:27017,cluster0-shard-00-01-ukyao.mongodb.net:27017,cluster0-shard-00-02-ukyao.mongodb.net:27017
-    # MONGO_DB_URI: mongodb://localhost:27017
-    # MONGO_DB_NAME: adio-groups-${self:provider.stage}
-    MONGO_DB_NAME: ${env:MONGO_DB_NAME, file(./config/${self:provider.stage}.js):db.name}-${self:provider.stage}
-    # MONGO_DB_PARAMS: "ssl=true&replicaSet=Cluster0-shard-0&authSource=admin"
-    MONGO_DB_PARAMS: ${env:MONGO_DB_PARAMS, file(./config/${self:provider.stage}.js):db.params}
+    MONGO_DB_URI: ${env:MONGO_DB_URI, file(./config/${self:custom.config}.js):db.uri}
+    MONGO_DB_NAME: ${env:MONGO_DB_NAME, file(./config/${self:custom.config}.js):db.name}-${self:custom.config}
+    MONGO_DB_PARAMS: ${env:MONGO_DB_PARAMS, file(./config/${self:custom.config}.js):db.params}
 
 functions:
   getGroup:
@@ -55,9 +51,16 @@ functions:
       - http:
           method: delete
           path: groups/{id}/projects
-  
+
+  addUsers:
+    handler: handlers/addUsers.addUsersHandler
+    events:
+      - http:
+          method: put
+          path: groups/{id}/users
 
 custom:
+  config: ${opt:config, self:provider.stage}
   webpackIncludeModules: true
   serverless-offline:
-    port: 3001
+    port: 4000
